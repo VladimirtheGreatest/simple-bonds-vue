@@ -1,5 +1,5 @@
 <template>
-  <div class="Investments">
+  <div class="Investments pt-10">
     <h1 class="subheading grey--text">All Investments</h1>
 
     <v-container fluid class="my-5">

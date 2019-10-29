@@ -3,14 +3,15 @@
 
     <v-app-bar dark app>
          <v-app-bar-nav-icon class="white--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-app-bar-title class="text-uppercase white--text">
+      <v-toolbar-title class="text-uppercase white--text">
         <span class="font-weight-light">Simple</span>
         <span>Bonds</span>
-      </v-app-bar-title>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn flat color="grey">
-        <span>Log in</span>
-        <v-icon right>apps</v-icon>
+      <v-btn text>
+          <v-icon left>apps</v-icon>
+        <span color="white">Log in</span>
+    
       </v-btn>
     </v-app-bar>
 
