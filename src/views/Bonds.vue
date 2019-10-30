@@ -3,8 +3,9 @@
     <h1 class="grey--text">Bonds</h1>
 
       <v-container fluid class="my-5">
+           <v-progress-circular v-if="loading" :size="100" indeterminate color="black"></v-progress-circular>
         <!--calculate return-->
-         <v-row >
+         <v-row v-else >
            <v-col v-for="bond in bonds" :key="bond.id" sm="12" md="6" xs="12">
 
         <v-card class="mx-auto px-5 mb-5" max-width="600" height="200" outlined elevation="12">
@@ -18,9 +19,9 @@
       </v-list-item-content>
 
       <v-list-item-avatar
-        size="80"
-        color="black"
-      > <v-icon color="white" size="50">visibility</v-icon></v-list-item-avatar>
+        size="50"
+         color="black"
+      > <v-icon color="white" size="30">visibility</v-icon></v-list-item-avatar>
     </v-list-item>
 
     <v-card-actions>
@@ -37,19 +38,12 @@
 
 
 <script>
-import { log } from 'util';
 export default {
     data() {
     return {
       //I will fetch the information from the api and I will store them as a state, after that I will render the content
       bonds: [],
-      duration_months: null,
-      expected_payout: null,
-      id: null,
-      invested_amount: null,
-      maturity_interest: null,
-      name: null,
-      quarterly_interest: null
+      loading : true
     }
   },
  created () {
@@ -79,7 +73,7 @@ methods: {
                       quarterly_interest: item.quarterly_interest
               }
        this.bonds.push(data)
-       console.log(data)
+       this.loading = false
       })
     })
     }
