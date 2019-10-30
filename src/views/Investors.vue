@@ -22,15 +22,16 @@
         <v-row class="fill-height" align="center" justify="center">
           <div class="display-3">
              <v-list shaped class="mx-auto" max-width="600" tile>
-                   <v-subheader >Investor</v-subheader>
         <v-list-item >
           <v-list-item-icon>
-            <v-icon size="50">person</v-icon>
+               <v-subheader>Investor</v-subheader>
+            <v-icon size="40">person</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title><h1>{{ investor.first_name }} {{ investor.last_name }}</h1></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+          <v-btn :to="investor.route">Portfolio</v-btn>
         </v-list>
           </div>
         </v-row>
@@ -72,7 +73,8 @@ methods: {
           const data = {
                       last_name: item.last_name,
                       first_name: item.first_name,
-                      id: item.id
+                      id: item.id,
+                      route: `/Investor/${ item.id }`  //this is the route we are getting for the individual investor to access his investments, cancel his investments, see portfolio etc.
               }
        this.investors.push(data)
        this.loading = false

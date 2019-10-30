@@ -15,7 +15,7 @@
         <v-list-item-title class="headline mb-1">{{bond.name}}</v-list-item-title>
         <v-list-item-subtitle><v-icon v-if="bond.invested_amount > 100000" left>trending_up</v-icon>
         <v-icon v-else="" left>trending_flat</v-icon>
-         All investments {{bond.invested_amount}} </v-list-item-subtitle>
+         All investments £{{bond.invested_amount / 100}} </v-list-item-subtitle>
       </v-list-item-content>
 
       <v-list-item-avatar
