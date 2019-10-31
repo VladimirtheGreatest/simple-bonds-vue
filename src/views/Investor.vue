@@ -3,9 +3,10 @@
     <v-container fluid>
       <v-progress-circular v-if="loading" :size="100" indeterminate color="black"></v-progress-circular>
       <v-row v-else >
-              <v-col  v-for="investment in investor" :key="investment.id"  sm="12" md="4" xs="12">
+              <v-col  v-for="(investment, index) in investor" :key="investment.id"  sm="12" md="4" xs="12">
+
                  <v-toolbar dark>
-     
+
 
       <v-toolbar-title>Investment</v-toolbar-title>
 
@@ -17,9 +18,12 @@
     </v-toolbar>
           <v-list shaped class="mx-auto" max-width="500" tile>
         <v-list-item >
-          <v-list-item-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
+
+          <v-list-item-content >
+            <v-list-item-icon> <!-- this will generate id for each investment, I will then use that in the API request to delete chosen investment-->
+                  <div>
+                      </div>
+            </v-list-item-icon>
                 <v-icon>person</v-icon>
                 <v-list-item-title class="mb-5">{{ investment.first_name }} {{ investment.last_name }}</v-list-item-title>
                 <v-list-item-title class="mb-5 headline"><span class="font-weight-bold">Bond name:</span> {{ investment.bond_name }}</v-list-item-title>
@@ -32,7 +36,7 @@
                    <v-icon>timelapse</v-icon>
                 <v-list-item-title class="mb-5"><span class="font-weight-bold">Last update:</span> {{ investment.updated_at}}</v-list-item-title>
                 <v-list-item-title class="red--text text-uppercase mt-5" v-if="investment.status !== 'pending'">{{ investment.status }}</v-list-item-title>
-                <v-btn  class="red mt-5" v-else>
+                <v-btn :id="investment.id" @click="deleteInvestment(investment.id)" class="red mt-5" v-else>
                 <v-icon left size="30">cancel_presentation</v-icon>  Cancel Investment
                 </v-btn>
           </v-list-item-content>
@@ -49,10 +53,10 @@
   </div>
 </template>
 
-  
+
 <script>
   //Cancel a pending investment (they cannot cancel investments that are committed or already cancelled) alerts, confirm window pop up
-  
+
 
 import router from '@/router'
 export default {
@@ -79,7 +83,7 @@ methods: {
     },
   }).then(response => response.json())
     .then(object => {
-      
+
        const investorsInvestment = object.data;
       console.log(investorsInvestment)
       investorsInvestment.forEach(item => {
@@ -99,7 +103,23 @@ methods: {
        this.loading = false
       })
     })
-    }
+  },
+  deleteInvestment(id) {
+    //implement some alert and confirm button, reload the page as well once cancelled
+    (async () => {
+       const investmentId = await id;
+       const routeId = await router.currentRoute.params.investor_id;
+   const rawResponse = await fetch(`http://165.227.229.49:8000/investors/${ routeId }/investments/${ investmentId }`, {
+   "method": "DELETE",
+     headers: {
+       'Accept': 'application/json',
+       "Authorization": "4ee6VsMCJLVjPwpsRSEy5K3WzQqkO6cL"
+     },
+   });
+   const content = await rawResponse.json();
+   console.log(content);
+ })();;
+  }
   }
 }
 </script>
