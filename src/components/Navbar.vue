@@ -39,7 +39,6 @@ export default {
      links: [
         { icon: 'dashboard', text: 'Bonds', route: '/' },
         { icon: 'person', text: 'Investors', route: '/Investors' },
-        { icon: 'money', text: 'Make an investment', route: '/Invest' },
         { icon: 'attach_money', text: 'All investments', route: '/Investments' },
       ]
     }

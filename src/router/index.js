@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import Bonds from '../views/Bonds.vue'
 import Investors from '../views/Investors.vue'
 import Investor from '../views/Investor.vue'
-import Invest from '../views/Invest.vue'
 
 Vue.use(VueRouter)
 
@@ -23,12 +22,7 @@ const routes = [
   path: '/Investor/:investor_id',
   name: 'investor',
   component: Investor
-  },
-  {
-    path: '/Invest',
-    name: 'invest',
-    component: Invest
-    }
+  }
    
 
 ]

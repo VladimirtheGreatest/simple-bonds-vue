@@ -1,9 +1,9 @@
-<template>
+<template >
   <div class="Investor pt-10">
     <v-container fluid>
       <v-progress-circular v-if="loading" :size="100" indeterminate color="black"></v-progress-circular>
-      <v-row v-else >
-              <v-col  v-for="(investment, index) in investor" :key="investment.id"  sm="12" md="4" xs="12">
+      <v-row v-else class="pb-10" >
+              <v-col  v-for="(investment) in investor" :key="investment.id"  sm="12" md="4" xs="12">
 
                  <v-toolbar dark>
 
@@ -45,6 +45,65 @@
             </v-col>
 
       </v-row>
+               
+            <h1 class="subheading grey--text pt-10">Make an investment</h1>
+
+
+                 <v-container fluid class="my-5">
+             <v-progress-circular v-if="loading" :size="100" indeterminate color="black"></v-progress-circular>
+        <v-row v-else align="center">
+
+      
+      <v-row class="mb-10">
+      <v-col cols="12" md="10" sm="12" >
+        <v-text-field
+          label="How much do you want to invest?"
+          value="0.00"
+          prefix="£"
+          v-model="money"
+          clearable
+         outlined
+         rounded
+         solo
+        ></v-text-field>
+      </v-col>
+
+      <v-col cols="12" md="2" sm="12">
+        <v-radio-group v-model="type" row>
+      <v-radio label="On maturity" color="red"  id="one" value="maturity"></v-radio>
+      <v-radio label="Quarterly" color="red"  id="two" value="quarterly"></v-radio>
+           </v-radio-group>
+           </v-col>
+
+      <v-col cols="12">
+       <h1>Your investment: £{{ money }}</h1>
+      </v-col>
+
+      <v-col cols="12">
+      <h1>Interest paid on: {{ type }}</h1>
+      </v-col>
+           </v-row>
+    
+         <v-row>
+        <v-col v-for="(bond) in bonds" :key="bond.id"  sm="12" md="6" xs="12">
+        <v-list shaped dark class="mx-auto" max-width="600" tile>
+        <v-list-item >
+        <v-list-item-icon>
+        <v-icon>money</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+        <v-list-item-title>{{ bond.name }} {{ bond.duration_months }}</v-list-item-title>
+        <v-btn :id="bond.id" @click="Invest(bond.id)"> Invest</v-btn>
+        </v-list-item-content>
+        </v-list-item>
+        </v-list>
+        </v-col>
+          </v-row>
+       </v-row>
+
+    </v-container>
+
+
        <v-btn class="mt-10" x-large rounded dark to="/Investors"><v-icon size="40">arrow_back</v-icon>Back</v-btn>
     </v-container>
 
@@ -56,19 +115,21 @@
 
 <script>
   //Cancel a pending investment (they cannot cancel investments that are committed or already cancelled) alerts, confirm window pop up
-
-
 import router from '@/router'
 export default {
    data() {
     return {
       //I will fetch the information from the api and I will store the investor as a state, after that I will render all of his investments and I will add a method to cancel his investments
       investor: [],
-      loading : true
+      loading : true,
+      bonds : [],
+      type : '',
+      money : ''
     }
   },
- created () {
-    this.fetchData()
+ mounted () {
+    this.fetchData()    //investor`s portfolio
+    this.fetchData2()  //bonds
   },
 methods: {
     fetchData() {
@@ -104,6 +165,54 @@ methods: {
       })
     })
   },
+    fetchData2() {
+     fetch('http://165.227.229.49:8000/bonds', {
+     method: 'GET',
+     "timeout": 0,
+     headers: {
+         "Accept": "application/json",
+         "Authorization": "4ee6VsMCJLVjPwpsRSEy5K3WzQqkO6cL"
+     },
+   }).then(response => response.json())
+     .then(object => {
+       //this is the array of bonds which we are getting from the object that is returned as a promise, invidividual bond is stored as an object inside of the array
+       const bonds = object.data;
+       bonds.forEach(item => {
+           const data = {
+                       duration_months: item.duration_months,
+                       expected_payout: item.expected_payout,
+                       id: item.id,
+                       invested_amount: item.invested_amount,
+                       maturity_interest: item.maturity_interest,
+                       name: item.name,
+                       quarterly_interest: item.quarterly_interest
+               }
+        this.bonds.push(data)
+        this.loading = false
+       })
+     })
+   },
+   Invest(id) {
+     (async () => {
+       const money = await this.money * 100;   //how much money do you want to invest
+      const bondId = await id;          //unique investment id (chosen by the investor)
+       const routeId = await router.currentRoute.params.investor_id;  //I will use this id from the route parameter to identify the investor so I can send his investments to the API
+       const type = await this.type;
+       console.log(routeId)
+   const rawResponse = await fetch(`http://165.227.229.49:8000/investors/${routeId}/investments`, {
+     method: 'POST',
+     headers: {
+       'Accept': 'application/json',
+       'Content-Type': 'application/json',
+       "Authorization": "4ee6VsMCJLVjPwpsRSEy5K3WzQqkO6cL"
+     },
+     body: JSON.stringify({'bond_id': `${bondId}`, 'type': `${type}`, 'amount' : `${money}`}), 
+   });
+   const content = await rawResponse.json();
+   console.log(content);
+ })();
+
+   },
   deleteInvestment(id) {
     //implement some alert and confirm button, reload the page as well once cancelled
     (async () => {
@@ -123,3 +232,6 @@ methods: {
   }
 }
 </script>
+
+
+
