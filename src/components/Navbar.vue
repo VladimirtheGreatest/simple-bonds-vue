@@ -38,6 +38,7 @@ export default {
     drawer: false,
      links: [
         { icon: 'dashboard', text: 'Bonds', route: '/' },
+        { icon: 'money', text: 'Calculate', route: '/Calculate' },
         { icon: 'person', text: 'Investors', route: '/Investors' },
         { icon: 'attach_money', text: 'All investments', route: '/Investments' },
       ]

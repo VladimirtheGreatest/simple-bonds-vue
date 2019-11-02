@@ -25,12 +25,14 @@
     </v-list-item>
 
     <v-card-actions>
-      <v-btn text class="pr-5"><span class="font-weight-light pr-3">quarterly</span>{{Math.round(bond.quarterly_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
-      <v-btn text><span class="font-weight-light pr-3">on maturity</span>{{Math.round(bond.maturity_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
+      <v-btn text class="pr-5 black white--text"><span class="font-weight-light pr-3">quarterly</span>{{Math.round(bond.quarterly_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
+      <v-btn text class="black white--text" ><span class="font-weight-light pr-3">on maturity</span>{{Math.round(bond.maturity_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
     </v-card-actions>
   </v-card>
            </v-col>
+
        </v-row>
+   
     </v-container>
     
   </div>

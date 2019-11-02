@@ -53,7 +53,7 @@
              <v-progress-circular v-if="loading" :size="100" indeterminate color="black"></v-progress-circular>
         <v-row v-else align="center">
 
-      
+      <!--make a separate component for this-->
       <v-row class="mb-10">
       <v-col cols="12" md="10" sm="12" >
         <v-text-field
