@@ -1,6 +1,6 @@
 <template>
   <nav>
-
+         <!--navbar-->
     <v-app-bar dark app>
          <v-app-bar-nav-icon class="white--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="text-uppercase white--text">
@@ -11,10 +11,10 @@
       <v-btn text>
           <v-icon left>apps</v-icon>
         <span color="white">Log in</span>
-    
+             <!--navbar top end-->
       </v-btn>
     </v-app-bar>
-
+          <!--navbar links-->
      <v-navigation-drawer left app dark v-model="drawer" class="black">
         <v-list>
         <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
@@ -27,6 +27,7 @@
         </v-list-item>
 </v-list>
     </v-navigation-drawer>
+     <!--navbar links end-->
 
   </nav>
 </template>

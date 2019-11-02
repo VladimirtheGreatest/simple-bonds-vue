@@ -3,19 +3,11 @@
       <v-container fluid >
           <v-progress-circular v-if="loading" :size="100" indeterminate color="black"></v-progress-circular>
             <v-row v-else >
-                 <!--<v-col  v-for="investor in investors" :key="investor.id"  sm="12" md="6" xs="12">
-          <v-list shaped dark class="mx-auto" max-width="600" tile>
-             add investor route
-        <v-list-item >
-          <v-list-item-icon>
-            <v-icon>person</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{ investor.first_name }} {{ investor.last_name }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        </v-list>
-            </v-col>-->
+              <v-row>
+                <v-col >
+ <v-parallax src="../images/simple.jpg"></v-parallax>
+                </v-col>
+              </v-row>
             <v-carousel dark hide-delimiters show-arrows show-arrows-on-hover >
     <v-carousel-item v-for="investor in investors" :key="investor.id">
       <v-sheet height="100%">
@@ -40,7 +32,6 @@
   </v-carousel>
           </v-row>
     </v-container>
-
   </div>
 </template>
 

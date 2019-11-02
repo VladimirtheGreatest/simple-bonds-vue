@@ -1,8 +1,8 @@
 <template>
   <div class="Calculate">
-      <v-container fluid class="my-1">
+      <v-container fluid>
            <v-progress-circular v-if="loading" :size="100" indeterminate color="black"></v-progress-circular>
-        <!--calculate return-->
+        <!--calculate return start-->
          <v-row v-else >
         <v-col cols="12" md="12" sm="12" >
         <h1 v-if="money > 0" class="mb-10 mt-7">Choose your bond and your interest</h1>
@@ -30,13 +30,13 @@
       </v-col>
 
 
-              <v-carousel dark hide-delimiters show-arrows show-arrows-on-hover >
+              <v-carousel dark hide-delimiters show-arrows show-arrows-on-hover  >
     <v-carousel-item v-for="bond in bonds" :key="bond.id">
       <v-sheet height="100%">
         <v-row class="fill-height" align="center" justify="center">
-             <v-card class="mx-auto px-5 mb-5" max-width="600" height="200" outlined elevation="12">
+             <v-card class="mx-auto px-5 mb-5" max-width="600" height="200" outlined elevation="24">
     <v-list-item three-line>
-      <v-list-item-content>
+      <v-list-item-content >
         <div class="overline mb-4"><v-icon left>schedule</v-icon> Duration : {{bond.duration_months}} months </div>
         <v-list-item-title class="headline mb-1">{{bond.name}}</v-list-item-title>
         <v-list-item-subtitle><v-icon v-if="bond.invested_amount > 100000" left>trending_up</v-icon>
@@ -55,17 +55,12 @@
       <v-btn dark @click="Calculate(bond.maturity_interest, bond.duration_months)"><span class="font-weight-light pr-3">on maturity</span>{{Math.round(bond.maturity_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
     </v-card-actions>
   </v-card>
-
-
-
         </v-row>
       </v-sheet>
     </v-carousel-item>
   </v-carousel>
-
-
-
        </v-row>
+         <!--calculate return end-->
    
     </v-container>
     
@@ -77,7 +72,7 @@
 export default {
     data() {
     return {
-      //I will fetch the information from the api and I will store them as a state, after that I will render the content
+      //I will fetch the information from the api and I will store bonds as a state, after that I will render the content
       bonds: [],
       loading : true,
       ReturnOfInvestment : '',
@@ -118,12 +113,11 @@ methods: {
     })
     },
     Calculate(interest, duration) {
-
           (async () => {
       const investmentInPence = await  this.money * 100;
       const annualInterest = await  interest;
       const bondDuration = await  duration;
-      //      E=P+(P∗A/12)∗ D 
+      //      E=P+(P∗A/12)∗ D this is the return formula
       const total = await (investmentInPence) + (investmentInPence * annualInterest/12) * bondDuration;
       const poundTotal = await  `£ ${total/100}`
       this.ReturnOfInvestment = await  poundTotal;

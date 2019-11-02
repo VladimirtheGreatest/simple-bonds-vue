@@ -1,38 +1,31 @@
 <template>
   <div class="Bonds pt-10">
-    <h1 class="grey--text">Bonds</h1>
-
-      <v-container fluid class="my-5">
+    <h1 class="white--text">Bonds</h1>
+      <v-container fluid >
            <v-progress-circular v-if="loading" :size="100" indeterminate color="black"></v-progress-circular>
         <!--calculate return-->
          <v-row v-else >
            <v-col v-for="bond in bonds" :key="bond.id" sm="12" md="6" xs="12">
-
-        <v-card class="mx-auto px-5 mb-5" max-width="600" height="200" outlined elevation="12">
+        <v-card class="mx-auto px-5 mb-5" max-width="600" height="200" outlined elevation="24" rounded >
     <v-list-item three-line>
       <v-list-item-content>
         <div class="overline mb-4"><v-icon left>schedule</v-icon> Duration : {{bond.duration_months}} months </div>
-        <v-list-item-title class="headline mb-1">{{bond.name}}</v-list-item-title>
-        <v-list-item-subtitle><v-icon v-if="bond.invested_amount > 100000" left>trending_up</v-icon>
+        <v-list-item-title class="mb-2"><h2>{{bond.name}}</h2></v-list-item-title>
+        <v-list-item-subtitle><v-icon v-if="bond.invested_amount > 1000000" left>trending_up</v-icon>
         <v-icon v-else="" left>trending_flat</v-icon>
          All investments £{{bond.invested_amount / 100}} </v-list-item-subtitle>
-      </v-list-item-content>
-
-      <v-list-item-avatar
-        size="50"
-         color="black"
-      > <v-icon color="white" size="30">visibility</v-icon></v-list-item-avatar>
-    </v-list-item>
-
-    <v-card-actions>
-      <v-btn text class="pr-5 black white--text"><span class="font-weight-light pr-3">quarterly</span>{{Math.round(bond.quarterly_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
+          <v-list-item-title class="mb-1">
       <v-btn text class="black white--text" ><span class="font-weight-light pr-3">on maturity</span>{{Math.round(bond.maturity_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
-    </v-card-actions>
+    </v-list-item-title>
+    <v-list-item-title>
+      <v-btn text class="black white--text"><span class="font-weight-light pr-3">quarterly</span>{{Math.round(bond.quarterly_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
+    </v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
   </v-card>
            </v-col>
-
        </v-row>
-   
+           <!--calculate return end-->
     </v-container>
     
   </div>
@@ -82,3 +75,4 @@ methods: {
   }
 }
 </script>
+
