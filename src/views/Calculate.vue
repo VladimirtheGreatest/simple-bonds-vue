@@ -5,8 +5,8 @@
         <!--calculate return start-->
          <v-row v-else >
         <v-col cols="12" md="12" sm="12" >
-        <h1 v-if="money > 0" class="mb-10 mt-7">Choose your bond and your interest</h1>
-        <h1 v-else class="mb-10 mt-7">Calculate the expected return on a bond when investing a specified amount</h1>
+        <h1 v-if="money > 0" class="mb-10 mt-7">Choose your <b class="grey--text">bond</b> and your <b class="grey--text">interest</b></h1>
+        <h1 v-else class="mb-10 mt-7">Calculate the<b class="grey--text"> expected return</b> on a bond when investing a specified amount</h1>
         <v-text-field
           label="How much do you want to invest?"
           value="0.00"
@@ -20,28 +20,26 @@
       </v-col>
 
          <v-col v-if="money > 0" cols="12" md="6" sm="12" >
-      <h1>Your expected return is: {{ ReturnOfInvestment }}</h1>
-       <h2>Duration: {{ duration }} months</h2>
-        <h2>Interest paid: {{ Math.round(interest*100*100)/100}} %</h2>
+      <h1><v-icon size="30">attach_money</v-icon>Your expected return is: {{ ReturnOfInvestment }}</h1>
+       <h2><v-icon size="30" left>access_time</v-icon>Duration: {{ duration }} months</h2>
+        <h2><v-icon size="30" left>monetization_on</v-icon>Interest paid: {{ Math.round(interest*100*100)/100}} %</h2>
+          <h2><v-icon size="30" left>dashboard</v-icon>Your chosen bond: {{ name }}</h2>
       </v-col>
 
       <v-col v-if="money > 0" cols="12" md="6" sm="12" >
-       <h1>Your investment: £{{ money }}</h1>
+       <h1><v-icon size="30">attach_money</v-icon>Your investment: £{{ money }}</h1>
       </v-col>
 
 
-              <v-carousel dark hide-delimiters show-arrows show-arrows-on-hover  >
+              <v-carousel  show-arrows show-arrows-on-hover >
     <v-carousel-item v-for="bond in bonds" :key="bond.id">
       <v-sheet height="100%">
         <v-row class="fill-height" align="center" justify="center">
              <v-card class="mx-auto px-5 mb-5" max-width="600" height="200" outlined elevation="24">
     <v-list-item three-line>
       <v-list-item-content >
-        <div class="overline mb-4"><v-icon left>schedule</v-icon> Duration : {{bond.duration_months}} months </div>
-        <v-list-item-title class="headline mb-1">{{bond.name}}</v-list-item-title>
-        <v-list-item-subtitle><v-icon v-if="bond.invested_amount > 100000" left>trending_up</v-icon>
-        <v-icon v-else="" left>trending_flat</v-icon>
-         All investments £{{bond.invested_amount / 100}} </v-list-item-subtitle>
+         <v-list-item-title class="mb-4 mt-4"><h3><v-icon>schedule</v-icon><b><span> Duration :</span> {{bond.duration_months}} months</b></h3></v-list-item-title>
+        <v-list-item-title class="headline mb-4 mt-4"><h3>{{bond.name}}</h3></v-list-item-title>
       </v-list-item-content>
 
       <v-list-item-avatar
@@ -49,11 +47,16 @@
          color="black"
       > <v-icon color="white" size="30">attach_money</v-icon></v-list-item-avatar>
     </v-list-item>
-
-    <v-card-actions>
-      <v-btn dark @click="Calculate(bond.quarterly_interest, bond.duration_months)" class="pr-5"><span class="font-weight-light pr-3">quarterly</span>{{Math.round(bond.quarterly_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
-      <v-btn dark @click="Calculate(bond.maturity_interest, bond.duration_months)"><span class="font-weight-light pr-3">on maturity</span>{{Math.round(bond.maturity_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
-    </v-card-actions>
+          <div v-if="money > 0" class="flex-center">
+             <v-layout>
+            <v-flex class="mr-10">
+                <v-btn @click="Calculate(bond.quarterly_interest, bond.duration_months, bond.name)" class="pr-5"><span class="font-weight-light pr-3">quarterly</span>{{Math.round(bond.quarterly_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
+            </v-flex>
+            <v-flex>
+               <v-btn @click="Calculate(bond.maturity_interest, bond.duration_months, bond.name)"><span class="font-weight-light pr-3">on maturity</span>{{Math.round(bond.maturity_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
+            </v-flex>
+          </v-layout>
+            </div>
   </v-card>
         </v-row>
       </v-sheet>
@@ -68,7 +71,9 @@
 </template>
 
 
+
 <script>
+import Swal from 'sweetalert2'
 export default {
     data() {
     return {
@@ -78,7 +83,8 @@ export default {
       ReturnOfInvestment : '',
       money : '',
       duration : '',
-      interest : ''
+      interest : '',
+      name : ''
     }
   },
  created () {
@@ -112,19 +118,35 @@ methods: {
       })
     })
     },
-    Calculate(interest, duration) {
+    Calculate(interest, duration, name) {
           (async () => {
+              await Swal.fire({
+      position: 'center',
+      type: 'success',
+      title: 'Calculating...',
+      showConfirmButton: false,
+      timer: 1500,
+        })
       const investmentInPence = await  this.money * 100;
       const annualInterest = await  interest;
       const bondDuration = await  duration;
       //      E=P+(P∗A/12)∗ D this is the return formula
       const total = await (investmentInPence) + (investmentInPence * annualInterest/12) * bondDuration;
-      const poundTotal = await  `£ ${total/100}`
+      const poundTotal = await `£${total/100}`
       this.ReturnOfInvestment = await  poundTotal;
-       this.duration = await  bondDuration;
-        this.interest = await  annualInterest;
+       this.duration = await bondDuration;
+        this.interest = await annualInterest;
+          this.name = await name;
           })();;
     }
   }
 }
 </script>
+
+<style  scoped>
+.flex-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+</style>

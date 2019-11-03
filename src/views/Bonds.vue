@@ -1,6 +1,6 @@
 <template>
-  <div class="Bonds pt-10">
-    <h1 class="white--text">Bonds</h1>
+  <div class="Bonds">
+    <h1 class="mt-10 mb-10"><b class="grey--text display-2 ">SIMPLEBONDS</b> <br> The smart way to make your <b class="grey--text">money</b> grow</h1>
       <v-container fluid >
            <v-progress-circular v-if="loading" :size="100" indeterminate color="black"></v-progress-circular>
         <!--calculate return-->
@@ -9,17 +9,21 @@
         <v-card class="mx-auto px-5 mb-5" max-width="600" height="200" outlined elevation="24" rounded >
     <v-list-item three-line>
       <v-list-item-content>
-        <div class="overline mb-4"><v-icon left>schedule</v-icon> Duration : {{bond.duration_months}} months </div>
+        <v-list-item-title class="mb-4 mt-4"><h3><v-icon>schedule</v-icon><b><span class="grey--text"> Duration :</span> {{bond.duration_months}} months</b></h3></v-list-item-title>
         <v-list-item-title class="mb-2"><h2>{{bond.name}}</h2></v-list-item-title>
-        <v-list-item-subtitle><v-icon v-if="bond.invested_amount > 1000000" left>trending_up</v-icon>
+        <v-list-item-subtitle class="mb-2"><v-icon v-if="bond.invested_amount > 1000000" left>trending_up</v-icon>
         <v-icon v-else="" left>trending_flat</v-icon>
          All investments £{{bond.invested_amount / 100}} </v-list-item-subtitle>
-          <v-list-item-title class="mb-1">
-      <v-btn text class="black white--text" ><span class="font-weight-light pr-3">on maturity</span>{{Math.round(bond.maturity_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
-    </v-list-item-title>
-    <v-list-item-title>
-      <v-btn text class="black white--text"><span class="font-weight-light pr-3">quarterly</span>{{Math.round(bond.quarterly_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
-    </v-list-item-title>
+             <div class="flex-center">
+             <v-layout>
+            <v-flex class="mr-5">
+               <h3><span class="pr-2 grey--text"><b>On maturity</b></span>{{Math.round(bond.maturity_interest*100*100)/100}}% <span class="font-weight-bold overline text-lowercase">p.a</span></h3>
+            </v-flex>
+            <v-flex>
+              <h3><span class="pr-2 grey--text"><b>Quarterly</b></span>{{Math.round(bond.quarterly_interest*100*100)/100}}% <span class="font-weight-bold overline text-lowercase">p.a</span></h3>
+            </v-flex>
+          </v-layout>
+            </div>
       </v-list-item-content>
     </v-list-item>
   </v-card>
@@ -76,3 +80,11 @@ methods: {
 }
 </script>
 
+
+<style  scoped>
+.flex-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+</style>

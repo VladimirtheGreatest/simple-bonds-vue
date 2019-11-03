@@ -1,5 +1,6 @@
 <template >
   <div class="Investor pt-10">
+    <h1 class="mt-12 pt-10 mb-10"><b class=" display-2 ">Know what you own,<span class="grey--text">and know why you own it.</span></b> <br><b class="grey--text">Do your homework before making a decision.</b></h1>
     <v-container fluid>
       <v-progress-circular v-if="loading" :size="100" indeterminate color="black"></v-progress-circular>
        <!--investors investment start-->
@@ -36,7 +37,7 @@
       </v-row>
           <!--investors investment end-->  
             <!--Make an investment section start-->     
-            <h1 class="subheading grey--text pt-10">Make an investment</h1>
+            <h1 class="subheading black--text pt-10"><v-icon size="30" left>monetization_on</v-icon>Make your <b class="grey--text">money</b> grow</h1>
 
 
                  <v-container fluid class="my-5">
@@ -45,32 +46,31 @@
 
       <!--make a separate component for this-->
       <v-row class="mb-10">
-      <v-col cols="12" md="10" sm="12" >
-        <v-text-field
+        <v-col cols="12">
+            <div class="flex-center">
+             <v-layout>
+            <v-flex>
+          <v-text-field
           label="How much do you want to invest?"
           value="0.00"
           prefix="£"
           v-model="money"
           clearable
-         outlined
-         rounded
-         solo
+          outlined
+          size="100"
+        
         ></v-text-field>
-      </v-col>
-
-      <v-col cols="12" md="2" sm="12">
-        <v-radio-group v-model="type" row>
-      <v-radio label="On maturity" color="red" value="maturity"></v-radio>
-      <v-radio label="Quarterly" color="red" value="quarterly"></v-radio>
-           </v-radio-group>
-           </v-col>
+            </v-flex>
+          </v-layout>
+            </div>
+             </v-col>
 
       <v-col cols="12">
-       <h1>Your investment: £{{ money }}</h1>
+       <h1><v-icon size="30">attach_money</v-icon>Your investment: £{{ money }}</h1>
       </v-col>
 
       <v-col cols="12">
-      <h1>Interest paid on: {{ type }}</h1>
+      <h1><v-icon size="30" left>access_time</v-icon>Interest paid on: {{ type }}</h1>
       </v-col>
            </v-row>
             <!--Make an investment section end-->   
@@ -81,27 +81,29 @@
         <v-list outlined elevation="24" rounded class="mx-auto" max-width="600">
         <v-list-item >
         <v-list-item-content>
-            <div class="overline mb-4"><v-icon left>schedule</v-icon> Duration : {{bond.duration_months}} months </div>
+            <v-list-item-title class="mb-4 mt-4"><h3><v-icon>schedule</v-icon><b><span class="grey--text"> Duration :</span> {{bond.duration_months}} months</b></h3></v-list-item-title>
         <v-list-item-title class="headline mb-1"><h3>{{bond.name}}</h3></v-list-item-title>
              <div class="flex-center">
           <v-radio-group v-model="type" column>
              <v-layout>
 
-            <v-flex>
-                <v-list-item-subtitle class=" title font-weight-bold black--text">{{Math.round(bond.maturity_interest*100*100)/100}} %  </v-list-item-subtitle>
+            <v-flex class="mr-5">
+                <v-list-item-title class=" title font-weight-bold black--text">{{Math.round(bond.maturity_interest*100*100)/100}} %  </v-list-item-title>
                 <v-radio label="On maturity" color="black" value="maturity"></v-radio>
             </v-flex>
 
             <v-flex>
-                <v-list-item-subtitle class=" title font-weight-bold black--text ">{{Math.round(bond.quarterly_interest*100*100)/100}} %  </v-list-item-subtitle>
+               <v-list-item-title class=" title font-weight-bold black--text ">{{Math.round(bond.quarterly_interest*100*100)/100}} %  </v-list-item-title>
                 <v-radio label="Quarterly" color="black" value="quarterly"></v-radio>
             </v-flex>
+
+  
 
           </v-layout>
            </v-radio-group>
     </div>
      <v-list-item-title class="mb-1">
-        <v-btn dark :id="bond.id" @click="Invest(bond.id)"> Invest</v-btn> <!-- this will generate id for each bond, I will then use that in the API request to invest in specific bond-->
+        <v-btn v-if="money > 0" dark :id="bond.id" @click="Invest(bond.id)"> Invest</v-btn> <!-- this will generate id for each bond, I will then use that in the API request to invest in specific bond-->
           </v-list-item-title>
         </v-list-item-content>
         </v-list-item>

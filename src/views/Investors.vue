@@ -1,13 +1,10 @@
 <template>
   <div class="Investors">
+    <h1 class="mt-12 pt-10 mb-10"><b class=" display-2 ">Track your <span class="grey--text">investments</span></b> <br> Secure your capital with <b class="grey--text">simplebonds</b></h1>
       <v-container fluid >
           <v-progress-circular v-if="loading" :size="100" indeterminate color="black"></v-progress-circular>
-            <v-row v-else >
-              <v-row>
-                <v-col >
- <v-parallax src="../images/simple.jpg"></v-parallax>
-                </v-col>
-              </v-row>
+            <v-row v-else class="mt-10" >
+               <v-col sm="12" md="8" xs="12" >
             <v-carousel dark hide-delimiters show-arrows show-arrows-on-hover >
     <v-carousel-item v-for="investor in investors" :key="investor.id">
       <v-sheet height="100%">
@@ -30,6 +27,14 @@
       </v-sheet>
     </v-carousel-item>
   </v-carousel>
+   </v-col>
+    <v-col sm="12" md="4" xs="12" >
+                    <v-carousel cycle hide-delimiters :show-arrows="false">
+                  <v-carousel-item  v-for="(item,i) in items" :key="i" :src="item.src">
+                  </v-carousel-item>
+                   </v-carousel>
+                </v-col>
+ 
           </v-row>
     </v-container>
   </div>
@@ -41,7 +46,21 @@ export default {
     return {
       //I will fetch the information from the api and I will store investors as a state, after that I will render all investors on the website
       investors: [],
-      loading : true
+      loading : true,
+      items: [
+          {
+            src: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80',
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+          },
+          {
+            src: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+          },
+        ]
     }
   },
  created () {
