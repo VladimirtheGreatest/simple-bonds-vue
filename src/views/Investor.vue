@@ -66,7 +66,7 @@
              </v-col>
 
       <v-col cols="12">
-       <h1><v-icon size="30">attach_money</v-icon>Your investment: £{{ money }}</h1>
+       <h1><v-icon size="30">attach_money</v-icon>Your investment: <span v-if="money > 0"> £{{ money }}</span></h1>
       </v-col>
 
       <v-col cols="12">
@@ -84,7 +84,7 @@
             <v-list-item-title class="mb-4 mt-4"><h3><v-icon>schedule</v-icon><b><span class="grey--text"> Duration :</span> {{bond.duration_months}} months</b></h3></v-list-item-title>
         <v-list-item-title class="headline mb-1"><h3>{{bond.name}}</h3></v-list-item-title>
              <div class="flex-center">
-          <v-radio-group v-model="type" column>
+          <v-radio-group v-if="money > 0" v-model="type" column>
              <v-layout>
 
             <v-flex class="mr-5">
@@ -103,7 +103,7 @@
            </v-radio-group>
     </div>
      <v-list-item-title class="mb-1">
-        <v-btn v-if="money > 0" dark :id="bond.id" @click="Invest(bond.id)"> Invest</v-btn> <!-- this will generate id for each bond, I will then use that in the API request to invest in specific bond-->
+        <v-btn v-if="type.length > 0 && money > 0" dark :id="bond.id" @click="Invest(bond.id)"> Invest</v-btn> <!-- this will generate id for each bond, I will then use that in the API request to invest in specific bond-->
           </v-list-item-title>
         </v-list-item-content>
         </v-list-item>

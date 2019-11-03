@@ -4,6 +4,7 @@
       <v-container fluid >
           <v-progress-circular v-if="loading" :size="100" indeterminate color="black"></v-progress-circular>
             <v-row v-else class="mt-10" >
+                <!--all investors carousel-->
                <v-col sm="12" md="8" xs="12" >
             <v-carousel dark hide-delimiters show-arrows show-arrows-on-hover >
     <v-carousel-item v-for="investor in investors" :key="investor.id">
@@ -20,7 +21,7 @@
             <v-list-item-title><h1>{{ investor.first_name }} {{ investor.last_name }}</h1></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-          <v-btn :to="investor.route">Portfolio</v-btn>
+          <v-btn :to="investor.route">See Portfolio</v-btn>
         </v-list>
           </div>
         </v-row>
@@ -28,13 +29,15 @@
     </v-carousel-item>
   </v-carousel>
    </v-col>
+    <!--all investors carousel end-->
+    <!--random images carousel-->
     <v-col sm="12" md="4" xs="12" >
-                    <v-carousel cycle hide-delimiters :show-arrows="false">
+                    <v-carousel cycle interval="4000" hide-delimiters :show-arrows="false">
                   <v-carousel-item  v-for="(item,i) in items" :key="i" :src="item.src">
                   </v-carousel-item>
                    </v-carousel>
                 </v-col>
- 
+  <!--random images carousel end-->
           </v-row>
     </v-container>
   </div>
@@ -47,6 +50,7 @@ export default {
       //I will fetch the information from the api and I will store investors as a state, after that I will render all investors on the website
       investors: [],
       loading : true,
+      //random images
       items: [
           {
             src: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80',

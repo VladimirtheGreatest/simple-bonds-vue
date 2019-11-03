@@ -7,29 +7,33 @@
         <v-col cols="12" md="12" sm="12" >
         <h1 v-if="money > 0" class="mb-10 mt-7">Choose your <b class="grey--text">bond</b> and your <b class="grey--text">interest</b></h1>
         <h1 v-else class="mb-10 mt-7">Calculate the<b class="grey--text"> expected return</b> on a bond when investing a specified amount</h1>
-        <v-text-field
+
+            <v-col cols="12">
+            <div class="flex-center">
+             <v-layout>
+            <v-flex>
+          <v-text-field
           label="How much do you want to invest?"
           value="0.00"
           prefix="£"
           v-model="money"
           clearable
-         outlined
-         rounded
-         solo
+          outlined
+          size="100"
+        
         ></v-text-field>
+            </v-flex>
+          </v-layout>
+            </div>
+             </v-col>
       </v-col>
 
-         <v-col v-if="money > 0" cols="12" md="6" sm="12" >
-      <h1><v-icon size="30">attach_money</v-icon>Your expected return is: {{ ReturnOfInvestment }}</h1>
+         <v-col v-if="money > 0" cols="12" md="12" sm="12" >
+      <h1><v-icon size="30">attach_money</v-icon>Your <b class="grey--text">expected return</b> is: {{ ReturnOfInvestment }}</h1>
        <h2><v-icon size="30" left>access_time</v-icon>Duration: {{ duration }} months</h2>
         <h2><v-icon size="30" left>monetization_on</v-icon>Interest paid: {{ Math.round(interest*100*100)/100}} %</h2>
           <h2><v-icon size="30" left>dashboard</v-icon>Your chosen bond: {{ name }}</h2>
       </v-col>
-
-      <v-col v-if="money > 0" cols="12" md="6" sm="12" >
-       <h1><v-icon size="30">attach_money</v-icon>Your investment: £{{ money }}</h1>
-      </v-col>
-
 
               <v-carousel  show-arrows show-arrows-on-hover >
     <v-carousel-item v-for="bond in bonds" :key="bond.id">

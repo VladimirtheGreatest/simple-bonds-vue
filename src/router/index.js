@@ -12,7 +12,6 @@ const routes = [
     path: '/',
     name: 'bonds',
     component: Bonds
-    //add return formula
   },
   {
     path: '/Investors',
