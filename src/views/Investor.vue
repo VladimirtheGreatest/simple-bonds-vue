@@ -26,7 +26,7 @@
                 <v-list-item-title class="mb-5"><v-icon left>access_time</v-icon><span class="font-weight-bold">Created at:</span> {{ investment.created_at }}</v-list-item-title>           
                 <v-list-item-title v-if="investment.status !== 'pending'" class="mb-5"><v-icon left>timelapse</v-icon><span class="font-weight-bold">Last update:</span> {{ investment.updated_at}}</v-list-item-title>
                   <v-list-item-title class="green--text text-uppercase mt-3" v-else>{{ investment.status }}</v-list-item-title>
-                <v-list-item-title class="red--text text-uppercase mt-5" v-if="investment.status !== 'pending'">{{ investment.status }}</v-list-item-title>
+                <v-list-item-title class="red--text text-uppercase mt-5" v-if="investment.status !== 'pending' && 'committed'">{{ investment.status }}</v-list-item-title>
                 <v-btn :id="investment.id" @click="deleteInvestment(investment.id)" class="red mt-5" v-else> <!-- this will generate id for each investment, I will then use that in the API request to delete chosen investment-->
                 <v-icon left size="30">cancel_presentation</v-icon>  Cancel Investment
                 </v-btn>
