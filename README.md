@@ -3,7 +3,9 @@
 
 https://simplebondsvue.netlify.com/#/
 
-Make sure you load unsafe script in order to display the content since the API is not secure.
+<h1>Make sure you load unsafe script in order to display the content since the API is not secure.</h1>
+
+
 
 
 
