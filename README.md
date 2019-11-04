@@ -25,7 +25,7 @@ Must-Haves: A user of 'Simple Bonds' must be able to do the following:
   
   Nice-to-Haves: A user of 'Simple Bonds' would also like to be able to do the following:
   
-  Use simple bonds on their mobile device (done, tested on all devices)
+  Use simple bonds on their mobile device (done, need to add support for i-phone 5 and 6)
 
   Lookup an investor using text-based search (in progress)
 
