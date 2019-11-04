@@ -1,12 +1,12 @@
 <template>
   <div class="Bonds">
-    <h1 class="mt-12 mb-10"><b class="grey--text display-2 ">SIMPLEBONDS</b> <br> The smart way to make your <b class="grey--text">money</b> grow</h1>
+    <h1 class="mt-12 mb-10"><b id="heading" class="grey--text">SIMPLEBONDS</b> <br> The smart way to make your <b class="grey--text">money</b> grow</h1>
       <v-container fluid >
            <v-progress-circular v-if="loading" :size="100" indeterminate color="black"></v-progress-circular>
         <!--all bonds-->
          <v-row v-else >
            <v-col class="mb-5" sm="12" md="12" xs="12">
-              <v-btn class="black white--text mr-2" @click="Sort()" >Sort by highest interest</v-btn>
+              <v-btn id="buttonSort" class="black white--text mr-2" @click="Sort()" >Sort by highest interest</v-btn>
               <v-btn class="black white--text mr-2" @click="SortDuration()" >Sort by duration</v-btn>
                <v-col class="mb-5" sm="12" md="12" xs="12">
               <v-btn class="red"  @click="SortHot()"><v-icon left>whatshot</v-icon>Hot bonds!</v-btn>
@@ -22,12 +22,12 @@
         <v-icon v-else="" left>trending_flat</v-icon>
          All investments £{{bond.invested_amount / 100}} </v-list-item-subtitle>
              <div class="flex-center">
-             <v-layout>
-            <v-flex class="mr-5">
-               <h3><span class="pr-2 grey--text"><b>On maturity</b></span>{{Math.round(bond.maturity_interest*100*100)/100}}% <span class="font-weight-bold overline text-lowercase">p.a</span></h3>
+             <v-layout id="interest">
+            <v-flex id="marginzero">
+               <h3><span class="pr-2 grey--text"><b>On maturity</b></span>{{Math.round(bond.maturity_interest*100*100)/100}}% <span class="pa font-weight-bold overline text-lowercase">p.a</span></h3>
             </v-flex>
             <v-flex>
-              <h3><span class="pr-2 grey--text"><b>Quarterly</b></span>{{Math.round(bond.quarterly_interest*100*100)/100}}% <span class="font-weight-bold overline text-lowercase">p.a</span></h3>
+              <h3><span class="pr-2 grey--text"><b>Quarterly</b></span>{{Math.round(bond.quarterly_interest*100*100)/100}}% <span class="pa font-weight-bold overline text-lowercase">p.a</span></h3>
             </v-flex>
           </v-layout>
             </div>
@@ -124,9 +124,34 @@ methods: {
 
 
 <style  scoped>
-.flex-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+ #marginzero{
+    margin-right: 20px;
+  }
+
+  @media (min-width: 480px) and (max-width: 1080px) {
+     #marginzero{
+    margin-right: 10px;
+  }
+  }
+
+@media (max-width: 480px) {
+  #buttonSort{
+    margin-bottom: 10px;
+  }
+  #heading{
+    font-size: 35px;
+  }
+  #interest  {
+    font-size: 10px;
+  }
+  .pa{
+    display: none;
+  }
+  h1{
+    font-size: 25px;
+  }
+  #marginzero{
+    margin-right: 10px;
+  }
 }
 </style>

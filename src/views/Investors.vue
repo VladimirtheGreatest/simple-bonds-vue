@@ -14,8 +14,8 @@
              <v-list shaped class="mx-auto" max-width="600" tile>
         <v-list-item >
           <v-list-item-icon>
-               <v-subheader>Investor</v-subheader>
-            <v-icon size="40">person</v-icon>
+               <v-subheader id="investor">Investor</v-subheader>
+            <v-icon size="30">person</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title><h1>{{ investor.first_name }} {{ investor.last_name }}</h1></v-list-item-title>
@@ -98,3 +98,14 @@ methods: {
   }
 }
 </script>
+
+<style scoped>
+@media (max-width: 480px) {
+  h1{
+    font-size: 25px;
+  }
+  #investor{
+    display: none;
+  }
+}
+</style>

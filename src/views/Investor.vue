@@ -1,6 +1,6 @@
 <template >
   <div class="Investor pt-10">
-    <h1 class="mt-12 pt-10 mb-10"><b class=" display-2 ">Know what you own,<span class="grey--text">and know why you own it.</span></b> <br><b class="grey--text">Do your homework before making a decision.</b></h1>
+    <h1 class="mt-12 pt-10 mb-10"><b id="heading">Know what you own,<span class="grey--text"> and know why you own it.</span></b> <br><b class="grey--text">Do your homework before making a decision.</b></h1>
     <v-container fluid>
       <v-progress-circular v-if="loading" :size="100" indeterminate color="black"></v-progress-circular>
        <!--investors investment start-->
@@ -20,14 +20,14 @@
                     <v-list-item-title class="mb-5"><v-icon>person</v-icon><span class="font-weight-light">{{ investment.first_name }} {{ investment.last_name }}</span></v-list-item-title>
                       </div>
             </v-list-item-icon>
-                <v-list-item-title class="mb-5 headline"><span class="font-weight-bold">Bond name:</span> {{ investment.bond_name }}</v-list-item-title>
+                <v-list-item-title class="mb-5 headline"><span id="bondname" class="font-weight-bold">Bond name:</span> {{ investment.bond_name }}</v-list-item-title>
                 <v-list-item-title class="mb-5"><v-icon>attach_money</v-icon><span class="font-weight-bold">Investment Amount:</span> £{{ investment.amount / 100 }}</v-list-item-title>
                 <v-list-item-title class="mb-5"> <v-icon left>money</v-icon><span class="font-weight-bold">Investment Type:</span> {{ investment.type }}</v-list-item-title>
                 <v-list-item-title class="mb-5"><v-icon left>access_time</v-icon><span class="font-weight-bold">Created at:</span> {{ investment.created_at }}</v-list-item-title>           
                 <v-list-item-title v-if="investment.status !== 'pending'" class="mb-5"><v-icon left>timelapse</v-icon><span class="font-weight-bold">Last update:</span> {{ investment.updated_at}}</v-list-item-title>
                   <v-list-item-title class="green--text text-uppercase mt-3" v-else>{{ investment.status }}</v-list-item-title>
                 <v-list-item-title class="red--text text-uppercase mt-5" v-if="investment.status !== 'pending' && 'committed'">{{ investment.status }}</v-list-item-title>
-                <v-btn :id="investment.id" @click="deleteInvestment(investment.id)" class="red mt-5" v-else> <!-- this will generate id for each investment, I will then use that in the API request to delete chosen investment-->
+                <v-btn :id="investment.id" @click="deleteInvestment(investment.id)" class="red mt-4" v-else> <!-- this will generate id for each investment, I will then use that in the API request to delete chosen investment-->
                 <v-icon left size="30">cancel_presentation</v-icon>  Cancel Investment
                 </v-btn>
           </v-list-item-content>
@@ -78,7 +78,7 @@
         <!--Bonds section-->
          <v-row>
         <v-col v-for="(bond) in bonds" :key="bond.id"  sm="12" md="6" xs="12">
-        <v-list outlined elevation="24" rounded class="mx-auto" max-width="600">
+        <v-list id="list" outlined elevation="24" rounded class="mx-auto" >
         <v-list-item >
         <v-list-item-content>
             <v-list-item-title class="mb-4 mt-4"><h3><v-icon>schedule</v-icon><b><span class="grey--text"> Duration :</span> {{bond.duration_months}} months</b></h3></v-list-item-title>
@@ -89,7 +89,7 @@
 
             <v-flex class="mr-5">
                 <v-list-item-title class=" title font-weight-bold black--text">{{Math.round(bond.maturity_interest*100*100)/100}} %  </v-list-item-title>
-                <v-radio label="On maturity" color="black" value="maturity"></v-radio>
+                <v-radio label="Maturity" color="black" value="maturity"></v-radio>
             </v-flex>
 
             <v-flex>
@@ -295,11 +295,28 @@ methods: {
 }
 </script>
 
-<style  scoped>
-.flex-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+<style scoped>
+#heading{
+  font-size: 50px;
+}
+#list{
+  max-width: 600px;
+}
+@media (max-width: 480px) {
+  h1{
+    font-size: 30px;
+  }
+  #heading{
+  font-size: 25px;
+}
+#list{
+  max-width: 300px;
+}
+h3{
+  font-size: 18px;
+}
+#bondname{
+  display: none;
+}
 }
 </style>
-

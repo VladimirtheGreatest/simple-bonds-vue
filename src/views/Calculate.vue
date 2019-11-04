@@ -37,13 +37,13 @@
 
               <v-carousel  show-arrows show-arrows-on-hover >
     <v-carousel-item v-for="bond in bonds" :key="bond.id">
-      <v-sheet height="100%">
+      <v-sheet id="vsheet" height="100%">
         <v-row class="fill-height" align="center" justify="center">
-             <v-card class="mx-auto px-5 mb-5" max-width="600" height="200" outlined elevation="24">
+             <v-card id="card" class="mx-auto px-5 mb-5" max-width="600" height="200" outlined elevation="24">
     <v-list-item three-line>
       <v-list-item-content >
          <v-list-item-title class="mb-4 mt-4"><h3><v-icon>schedule</v-icon><b><span> Duration :</span> {{bond.duration_months}} months</b></h3></v-list-item-title>
-        <v-list-item-title class="headline mb-4 mt-4"><h3>{{bond.name}}</h3></v-list-item-title>
+        <v-list-item-title class="headline mb-4 mt-4"><h3 id="bondname">{{bond.name}}</h3></v-list-item-title>
       </v-list-item-content>
 
       <v-list-item-avatar
@@ -53,11 +53,11 @@
     </v-list-item>
           <div v-if="money > 0" class="flex-center">
              <v-layout>
-            <v-flex class="mr-10">
-                <v-btn @click="Calculate(bond.quarterly_interest, bond.duration_months, bond.name)" class="pr-5"><span class="font-weight-light pr-3">quarterly</span>{{Math.round(bond.quarterly_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
+            <v-flex id="marginright">
+                <v-btn @click="Calculate(bond.quarterly_interest, bond.duration_months, bond.name)" class="pr-5"><span class="font-weight-light pr-2 interest">quarterly</span>{{Math.round(bond.quarterly_interest*100*100)/100}}% <span class="font-weight-light text-lowercase pa">p.a</span></v-btn>
             </v-flex>
             <v-flex>
-               <v-btn @click="Calculate(bond.maturity_interest, bond.duration_months, bond.name)"><span class="font-weight-light pr-3">on maturity</span>{{Math.round(bond.maturity_interest*100*100)/100}}% <span class="font-weight-light text-lowercase">p.a</span></v-btn>
+               <v-btn @click="Calculate(bond.maturity_interest, bond.duration_months, bond.name)"><span class="font-weight-light pr-2 interest">on maturity</span>{{Math.round(bond.maturity_interest*100*100)/100}}% <span class="font-weight-light text-lowercase pa">p.a</span></v-btn>
             </v-flex>
           </v-layout>
             </div>
@@ -147,10 +147,25 @@ methods: {
 }
 </script>
 
-<style  scoped>
-.flex-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+<style scoped>
+#marginright{
+    margin-right: 20px;
+  }
+@media (max-width: 480px) {
+  h3{
+    font-size: 15px;
+  }
+  #marginright{
+    margin-right: 5px;
+  }
+  #card{
+    width: 100%;
+  }
+  .interest{
+    font-size: 10px;
+  }
+  .pa{
+    display: none;
+  }
 }
 </style>
